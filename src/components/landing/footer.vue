@@ -21,4 +21,9 @@ export default {
         align-items: center;
         color: #494356;
     }
+
+    footer p {
+        padding: 5px;
+        background: rgba(255, 255, 255, 0.4);
+    }
 </style>

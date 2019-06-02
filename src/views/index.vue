@@ -19,15 +19,16 @@
     #main__container {
         position: relative;
         width: 100%;
-        height: 500px;
+        height: 700px;
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
         flex-direction: row;
     }
 
     #main__container #main__container__content {
-        margin-left: 75px;
+        margin-left: 50px;
+        margin-top: 100px;
         width: 700px;
         display: flex;
         justify-content: flex-start;
@@ -70,7 +71,7 @@
 
     #main__container #main__container__content {
         position: absolute;
-        left: 100px;
+        left: 50px;
         width: 700px;
         display: flex;
         justify-content: flex-start;
@@ -91,6 +92,7 @@
     }
 
     #main__container figure {
+        margin: 0;
         position: absolute;
         height: 500px;
         right: 25px;
