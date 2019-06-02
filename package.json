@@ -1,0 +1,43 @@
+{
+  "name": "pixelwars",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "dev": "concurrently \"npm run serve\" \"nodemon ./server/src/index.js\""
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^4.1.0",
+    "core-js": "^2.6.9",
+    "env-cmd": "^9.0.2",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.2.6",
+    "mongoose": "^5.5.12",
+    "multer": "^1.4.1",
+    "sharp": "^0.22.1",
+    "validator": "^10.11.0",
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.3",
+    "vuex": "^3.1.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.8.0",
+    "@vue/cli-service": "^3.8.0",
+    "axios": "^0.18.1",
+    "vue-cli-plugin-axios": "0.0.4",
+    "vue-template-compiler": "^2.5.21"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}
