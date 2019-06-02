@@ -1,7 +1,7 @@
 <template>
     <header>
         <a id="header__content">
-            <h2>Daymanager</h2>
+            <h2>Dailyroutine</h2>
         </a>
         <div id="header__nav">
             <ul>
@@ -60,8 +60,8 @@ export default {
         content: '';
         position: absolute;
         top: 92px;
-        margin-left: -170px;
-        width: 170px;
+        margin-left: -182px;
+        width: 180px;
         height: 2px;
         -webkit-transition: all 0.3s ease;
         -o-transition: all 0.3s ease;
