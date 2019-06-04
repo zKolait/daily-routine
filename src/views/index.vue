@@ -155,8 +155,135 @@
         max-width: calc(100% - 510px);
         min-width: 520px;
     }
-
 }
+
+
+@media screen and (max-width: 1024px) and (min-width: 650px) {
+    #main__container {
+        position: relative;
+        width: 100%;
+        height: 700px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    #main__container #main__container__content {
+        position: absolute;
+        top: 0px;
+        left: 50px;
+        width: 500px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    #main__container #main__container__content h1 {
+        font-weight: bold;
+        font-size: 42px;
+    }
+
+    #main__container #main__container__content p {
+        width: 500px;
+        font-weight: 500;
+        color: #25222C;
+        margin: 0 0 20px 0;
+    }
+
+    #main__container figure {
+        position: absolute;
+        top: 50px;
+        right: 0;
+        height: 500px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    #main__container figure img {
+        max-width: calc(100% - 360px);
+        min-width: 450px;
+    }
+
+    #main__container a {
+        position: relative;
+        z-index: 2;
+    }
+}
+
+
+
+@media screen and (max-width: 650px) {
+    #main__container {
+        position: relative;
+        width: 100%;
+        height: 500px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    #main__container #main__container__content {
+        position: absolute;
+        top: 0px;
+        left: 15px;
+        width: 95%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    #main__container #main__container__content h1 {
+        width: 100%;
+        font-weight: bold;
+        font-size: 32px;
+    }
+
+    #main__container #main__container__content p {
+        width: 100%;
+        font-weight: 500;
+        color: #25222C;
+        margin: 0 0 20px 0;
+    }
+
+    #main__container figure {
+        position: absolute;
+        top: 75px;
+        right: -20%;
+        height: 500px;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    #main__container figure img {
+        max-width: calc(100%);
+        min-width: 400px;
+    }
+
+    #main__container a {
+        position: relative;
+        z-index: 2;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* 1300 - infinite */

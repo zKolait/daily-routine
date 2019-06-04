@@ -28,6 +28,20 @@ export default {
 
     main {
         width: 100%;
-        height: 700px;
+        height: 750px;
+    }
+
+    @media screen and (max-width: 1675px) and (min-width: 1400px) {
+        main {
+            width: 100%;
+            height: 700px;
+        }
+    }
+
+    @media screen and (max-width: 1400px) {
+        main {
+            width: 100%;
+            height: 650px;
+        }
     }
 </style>

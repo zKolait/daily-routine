@@ -12,10 +12,8 @@ export default {
 
 <style scoped>
     footer {
-        position: absolute;
-        bottom: 0;
+        position: relative;
         width: 100%;
-        height: 100px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -25,5 +23,12 @@ export default {
     footer p {
         padding: 5px;
         background: rgba(255, 255, 255, 0.4);
+        font-size: 16px;
+    }
+
+    @media screen and (max-width: 650px) {
+        footer p {
+            font-size: 13px;
+        }
     }
 </style>
