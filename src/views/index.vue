@@ -11,7 +11,7 @@
                 <img src="../../public/images/blobs.svg" alt="Decoration blobs">
             </figure>
         </div>
-        <figure v-scroll-reveal.reset="{ delay: 50, duration: 500, distance: '50px' }">
+        <figure id="main__svg" v-scroll-reveal.reset="{ delay: 50, duration: 500, distance: '50px' }">
             <img src="../../public/images/task__list.svg" alt="Illustration de présentation">
         </figure>
     </section>
@@ -32,8 +32,10 @@
 
 
 #main__container #website__main__presentation {
-    padding-top: 100px;
-    max-width: calc(50%);
+    position: relative;
+    padding: 100px 0px 5vw 0px;
+    width: calc(50%);
+    min-width: 690px;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -91,17 +93,20 @@
 }
 
 #main__container #website__main__presentation figure {
+    width: 50%;
     margin: 0;
     padding: 120px 0px 0px 0px;
 }
 
 #main__container #website__main__presentation img {
     position: relative;
-    min-width: 500px;
+    width: calc(100%);
+    min-width: 300px;
 }
 
 
-#main__container figure {
+#main__container #main__svg {
+    position: absolute;
     padding-top: 100px;
     max-width: calc(50%);
     display: flex;
@@ -109,9 +114,11 @@
     align-items: flex-start;
     flex-direction: column;
     flex-wrap: wrap;
+    right: 100px !important;
 }
 
-#main__container figure img {
+#main__container #main__svg img {
     max-width: 100%;
+    min-width: 700px;
 }
 </style>
