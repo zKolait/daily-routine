@@ -12,11 +12,12 @@ export default {
 
 <style scoped>
 footer {
-    padding-top: 100px;
+    padding-top: 120px;
     width: 100%;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
 }
 </style>
