@@ -26,12 +26,14 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      meta: {layout: 'landing'}
     },
     {
       path: '/register',
       name: 'register',
-      component: Register
+      component: Register,
+      meta: { layout: 'landing' }
     },
     {
       path: '/admin',

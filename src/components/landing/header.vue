@@ -4,8 +4,12 @@
             <i class="icon ion-md-checkmark"></i>
             <h2>Dailyroutine</h2>
         </router-link>
-        <router-link to="/login" id="app__login__button">
+        <router-link to="/login" id="app__login__button" v-if="checkRoute() || headerType === 'register'">
             <p>Se connecter</p>
+            <i class="icon ion-md-arrow-dropright"></i>
+        </router-link>
+        <router-link to="/register" id="app__login__button" v-if="headerType === 'login'">
+            <p>S'enregistrer</p>
             <i class="icon ion-md-arrow-dropright"></i>
         </router-link>
     </header>
@@ -15,8 +19,29 @@
 export default {
     data () {
         return {
+            headerType: null,
         }
-    }
+    },
+    mounted () {
+        this.checkRoute()
+    },
+    methods: {
+        checkRoute() {
+            if (this.$route.path.includes('login')) {
+                this.headerType = 'login'
+
+                return false
+            } else if (this.$route.path.includes('register')) {
+                this.headerType = 'register'
+
+                return false
+            } else {
+                this.headerType = null
+
+                return true
+            }
+        }
+    },
 }
 </script>
 
