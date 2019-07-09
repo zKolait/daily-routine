@@ -11,7 +11,7 @@ const Task = require('./task')
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
+        required: false,
         trim: true
     },
     password: {
@@ -120,6 +120,11 @@ userSchema.pre('save', async function (next) {
     next()
 })
 
+userSchema.methods.checkCredentials = async function (password, dbPassword) {
+    const valid = bcrypt.compareSync(password, dbPassword)
+
+    return valid
+}
 
 // Cascade delete tasks when user is deleted
 userSchema.pre('remove', async function (next) {

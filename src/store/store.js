@@ -1,15 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import authModule from '@/store/auth'
 
-// Stores to import
-import authModule from './auth'
-
-// Use vuex
 Vue.use(Vuex)
 
-// Load imported stores
 export default new Vuex.Store({
     modules: {
-        auth: authModule
+        auth: authModule,
     }
 })

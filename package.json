@@ -5,14 +5,15 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "dev": "concurrently \"npm run serve\" \"nodemon ./server/src/index.js\""
+    "dev": "concurrently \"npm run serve\" \"env-cmd ./.env nodemon ./server/index.js\""
   },
   "dependencies": {
     "@sendgrid/mail": "^6.4.0",
     "bcryptjs": "^2.4.3",
     "concurrently": "^4.1.0",
+    "cookie-parser": "^1.4.4",
     "core-js": "^2.6.9",
-    "env-cmd": "^9.0.2",
+    "env-cmd": "^8.0.2",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.2.6",

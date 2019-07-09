@@ -1,12 +1,19 @@
 const express = require('express')
-const router = new express.Router()
 const multer = require('multer')
 const sharp = require('sharp')
 const { sendWelcomeEmail, sendCancelationEmail } = require('../emails/account')
 
-const auth = require('../middleware/auth')
+
 const User = require('../models/user')
 require('../db/mongoose')
+
+
+
+// Middlewares
+const auth = require('../middleware/auth')
+
+// Router declaration
+const router = new express.Router()
 
 
 
@@ -19,54 +26,110 @@ router.get('/users/me', auth, async (req, res) => {
     }
 })
 
-// Logout user
-router.post('/users/logout', auth, async (req, res) => {
-    try {
-        req.user.tokens = req.user.tokens.filter((token) => {
-            return token.token !== req.token
-        })
-        await req.user.save()
 
-        res.send()
-    } catch (e) {
-        res.status(500).send()
-    }
-})
-
-router.post('/users/logoutAll', auth, async (req, res) => {
-    try {
-        req.user.tokens = []
-        await req.user.save()
-
-        res.send()
-    } catch (e) {
-        res.status(500).send()
-    }
-})
-
-// Post create user
-router.post('/users', async (req, res) => {
+// Auth routes
+// ->
+// Register user
+router.post('/auth/register', async (req, res) => {
     const user = new User(req.body)
 
     try {
         await user.save()
-        sendWelcomeEmail(user.email, user.name)
-        const token = await user.generateAuthToken()
+        const token = await user.generateAuthToken(res)
 
-        res.status(201).send({user, token})
+        res.status(201).send({ success: true, user, token })
     } catch (e) {
-        res.status(400).send(e)
+        const error = e.message
+        res.status(200).send({ success: false, error })
     }
 })
 
-// Login
-router.post('/users/login', async (req, res) => {
+// Login user
+router.post('/auth/login', async (req, res) => {
     try {
-        const user = await User.findByCredentials(req.body.email, req.body.password)
-        const token = await user.generateAuthToken()
-        res.status(200).send({ user, token })
+        if (!req.body.email || !req.body.password) {
+            return res.status(200).send({ message: 'Missing arguments.' })
+        }
+
+        let user = null
+        if (req.body.name) {
+            user = await User.findOne({ name: req.body.name })
+        } else if (req.body.email) {
+            user = await User.findOne({ email: req.body.email })
+        }
+
+        if (!user) {
+            throw new Error('User not found.')
+        }
+
+        const valid = await user.checkCredentials(req.body.password, user.password)
+
+        if (valid !== true) {
+            throw new Error('Bad password or email.')
+        }
+
+        const token = await user.generateAuthToken(res)
+
+        res.status(201).send({ success: true, user, token })
     } catch (e) {
-        res.status(400).send(e)
+        const error = e.message
+        res.status(200).send({ success: false, error })
+    }
+})
+
+// Validate user
+router.get('/auth/fetch', auth, async (req, res) => {
+    try {
+        res.send({ success: true, user: req.user, token: req.token })
+    } catch (e) {
+        const error = e.message
+        res.status(400).send({ success: false, error })
+    }
+})
+
+// Logout user
+router.get('/auth/logout', auth, async (req, res) => {
+    try {
+        // Clear cookies
+        res.clearCookie('x-hp', { path: '/' })
+        res.clearCookie('x-s', { path: '/' })
+
+        // Clear token in bdd
+        let tokens = req.user.tokens.filter((token => !bcrypt.compareSync(req.random, token.token)))
+        req.user.tokens = tokens
+        await req.user.save()
+
+        res.send({ success: true })
+    } catch (e) {
+        // Clear cookies
+        res.clearCookie('x-hp', { path: '/' })
+        res.clearCookie('x-s', { path: '/' })
+
+        const error = e.message
+        res.status(400).send({ success: true, error })
+    }
+})
+
+// Logout user
+router.get('/auth/logout', auth, async (req, res) => {
+    try {
+        // Clear cookies
+        res.clearCookie('x-hp', { path: '/' })
+        res.clearCookie('x-s', { path: '/' })
+
+        // Clear token in bdd
+        let tokens = req.user.tokens.filter((token => !bcrypt.compareSync(req.random, token.token)))
+        req.user.tokens = tokens
+        await req.user.save()
+
+        res.send({ success: true })
+    } catch (e) {
+        // Clear cookies
+        res.clearCookie('x-hp', { path: '/' })
+        res.clearCookie('x-s', { path: '/' })
+
+        const error = e.message
+        res.status(400).send({ success: true, error })
     }
 })
 

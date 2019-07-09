@@ -34,8 +34,27 @@ export default {
         }
     },
     methods: {
-        registerAction () {
-            
+        async registerAction () {
+            if (!this.credentials.email || !this.credentials.password || !this.credentials.comfirm_password) {
+                return this.error = 'Veuillez remplir tous les champs.'
+            }
+
+            console.log('t');
+
+            if (this.credentials.password !== this.credentials.comfirm_password) {
+                return this.error = 'Vos mots de passe doivent correspondrent.'
+            }
+
+            let response = await this.$store.dispatch('register', {
+                email: this.credentials.email,
+                password: this.credentials.password,
+            })
+
+            if (response.success !== true) {
+                return this.error = response.message
+            } else {
+                return this.$router.push('/')
+            }
         }
     },
 }

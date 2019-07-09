@@ -25,12 +25,30 @@ export default {
             credentials: {
                 email: null,
                 password: null,
-            }
+            },
+            error: null,
         }
     },
     methods: {
-        loginAction () {
+        async loginAction () {
+            if (!this.credentials.email || !this.credentials.password) {
+                return this.error = 'Veuillez remplir tous les champs.'
+            }
 
+            this.$store.dispatch('login', {
+                email: this.credentials.email,
+                password: this.credentials.password
+            })
+            .then((response) => {
+                if (response.success === false) {
+                    return this.error = response.message
+                } else {
+                    return this.$router.push('/')   
+                }
+            })
+            .catch((error) => {
+                return this.error = error.response.data
+            })
         }
     },
 }
