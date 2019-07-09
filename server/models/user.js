@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const randomatic = require('randomatic')
 const Task = require('./task')
 
 // Models
@@ -95,15 +96,39 @@ userSchema.methods.toJSON = function () {
 }
 
 // Generate auth token
-userSchema.methods.generateAuthToken = async function () {
+userSchema.methods.generateAuthToken = async function (res) {
     let user = this
-    const token = await jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET)
 
+    // Generate random
+    let random = await randomatic('aA0', 16)
+
+    // Generating token
+    const signOptions = {
+        expiresIn: "7 days",
+        algorithm: "RS256"
+    }
+
+    const PRIVATE_KEY = process.env.PRIVATE_KEY.replace(/\\n/g, '\n')
+    let token = await jwt.sign({ _id: user._id.toString(), random }, PRIVATE_KEY, signOptions)
+
+    // Adding random token to db
+    random = bcrypt.hashSync(random, 8)
     user.tokens = user.tokens.concat({
-        token
+        token: random
     })
+
+    // Save user
     await user.save()
 
+    let splitToken = token.toString().split('.')
+    const tokenPayload = splitToken[0] + '.' + splitToken[1]
+    const tokenSignature = splitToken[2]
+
+    // Generate cookies
+    res.cookie('x-hp', tokenPayload, { sameSite: true, httpOnly: false, secure: false, maxAge: 1000 * 60 * 60 * 2 })
+    res.cookie('x-s', tokenSignature, { sameSite: true, httpOnly: true, secure: false })
+
+    // Return token
     return token
 }
 

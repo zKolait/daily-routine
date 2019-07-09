@@ -5,10 +5,10 @@ export default {
     setToken(state, token) {
         state.token = token
     },
-    deleteUser(state, user) {
+    deleteUser(state) {
         state.user = null
     },
-    deleteToken(state, token) {
+    deleteToken(state) {
         state.token = null
     },
     setLoading(state, boolean) {
