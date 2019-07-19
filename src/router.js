@@ -5,7 +5,7 @@ import Router from 'vue-router'
 import Home from '@/views'
 import Login from '@/views/login'
 import Register from '@/views/register'
-import Admin from '@/views/admin'
+import Dashboard from '@/views/dashboard'
 
 // Middlewares
 import authMiddleware from '@/middleware/authMiddleware'
@@ -36,12 +36,12 @@ const router = new Router({
       meta: { layout: 'landing' }
     },
     {
-      path: '/admin',
-      name: 'admin',
-      meta: { layout: 'admin' },
+      path: '/dashboard',
+      name: 'dashboard',
+      meta: { layout: 'dashboard' },
       // Page with middleware
       beforeEnter: authMiddleware,
-      component: Admin
+      component: Dashboard
     }
   ]
 })

@@ -1,8 +1,8 @@
 <template>
     <div id="page__container">
-        <landing-header />
+        <landing-header :key="headerKey"/>
         <main>
-            <slot />
+            <slot/>
         </main>
         <landing-footer />
     </div>
@@ -13,7 +13,20 @@ import LandingHeader from '@/components/landing/header'
 import LandingFooter from '@/components/landing/footer'
 
 export default {
-    components: { LandingHeader, LandingFooter }
+    components: { 
+        LandingHeader, 
+        LandingFooter 
+    },
+    data() {
+        return {
+            headerKey: 0,
+        }
+    },
+    watch: {
+        '$route' (to, from) {
+            this.headerKey++
+        }
+    }
 }
 </script>
 

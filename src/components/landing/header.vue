@@ -30,7 +30,6 @@ export default {
         }
     },
     mounted () {
-        console.log('mounted');
         if (cookies.get('x-hp')) {
             this.isLogged = true
         } else {

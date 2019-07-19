@@ -48,7 +48,7 @@ router.post('/auth/register', async (req, res) => {
 router.post('/auth/login', async (req, res) => {
     try {
         if (!req.body.email || !req.body.password) {
-            return res.status(200).send({ message: 'Missing arguments.' })
+            return res.status(200).send({ message: 'Arguments non complets.' })
         }
 
         let user = null
@@ -59,13 +59,13 @@ router.post('/auth/login', async (req, res) => {
         }
 
         if (!user) {
-            throw new Error('User not found.')
+            throw new Error('Mauvais mot de passe ou email.')
         }
 
         const valid = await user.checkCredentials(req.body.password, user.password)
 
         if (valid !== true) {
-            throw new Error('Bad password or email.')
+            throw new Error('Mauvais mot de passe ou email.')
         }
 
         const token = await user.generateAuthToken(res)

@@ -19,5 +19,6 @@ footer {
     align-items: center;
     justify-content: center;
     text-align: center;
+    color: #888;
 }
 </style>

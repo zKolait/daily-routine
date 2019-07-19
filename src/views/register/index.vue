@@ -16,6 +16,11 @@
                     <label for="password" :class="{ active: credentials.comfirm_password }">Confirmer le mot de passe</label>
                 </div>
                 <button>Se connecter</button>
+                <transition name="fade">
+                    <div v-if="error" id="error__container">
+                        <p>{{ error }}</p>
+                    </div>
+                </transition>
             </form>
         </div>
     </section>
@@ -30,7 +35,8 @@ export default {
                 email: null,
                 password: null,
                 comfirm_password: null,
-            }
+            },
+            error: null,
         }
     },
     methods: {
@@ -61,6 +67,12 @@ export default {
 </script>
 
 <style>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .25s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 
 #main__container {
     display: flex;

@@ -12,6 +12,11 @@
                     <label for="password" :class="{ active: credentials.password }">Mot de passe</label>
                 </div>
                 <button>Se connecter</button>
+                <transition name="fade">
+                    <div v-if="error" id="error__container">
+                        <p>{{ error }}</p>
+                    </div>
+                </transition>
             </form>
         </div>
     </section>
@@ -35,18 +40,14 @@ export default {
                 return this.error = 'Veuillez remplir tous les champs.'
             }
 
-            console.log('a')
             let response = await this.$store.dispatch('login', {
                 email: this.credentials.email,
                 password: this.credentials.password
             })
 
-            console.log('b')
             if (response.success === false) {
-                console.log('c')
                 return this.error = response.message
             } else {
-                console.log(response)
                 return this.$router.push('/')   
             }
         }
@@ -55,6 +56,24 @@ export default {
 </script>
 
 <style>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .25s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+#error__container {
+    background: #E91E63;
+    color: white;
+    margin-top: 15px;
+    border-radius: 15px;
+    padding: 5px 15px 5px 15px;
+}
+#error__container p {
+    padding: 0px;
+    margin: 0px;
+}
 
 #main__container {
     display: flex;

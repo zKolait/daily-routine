@@ -7,8 +7,6 @@ export default {
             let response = await api.auth.register(credentials)
             response = response.data
 
-            console.log(response)
-
             if (response.success !== true) {
                 throw response.error
             }
@@ -20,7 +18,7 @@ export default {
             return { success: true, message: 'Authentification réussie.' }
         } catch (e) {
             // Return error
-            return { success: false, message: e }
+            return { success: false, message: 'Impossible de créer un compte avec ces informations.' }
         }
     },
     async login({ commit }, credentials) {

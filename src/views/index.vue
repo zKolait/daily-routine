@@ -28,9 +28,6 @@ export default {
         user: null,
     }
   },
-  mounted () {
-    // https://michaelnthiessen.com/force-re-render
-  }
 }
 </script>
 
