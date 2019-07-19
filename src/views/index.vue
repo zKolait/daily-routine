@@ -47,7 +47,7 @@ export default {
 
   #main__container #website__main__presentation {
     position: relative;
-    padding: 75px 0px 5vw 0px;
+    padding: 90px 0px 4vw 0px;
     width: calc(50%);
     min-width: 690px;
     display: flex;
@@ -120,7 +120,7 @@ export default {
 
   #main__container #main__svg {
     position: absolute;
-    padding-top: 60px;
+    padding-top: 80px;
     max-width: calc(50%);
     display: flex;
     justify-content: flex-start;
