@@ -29,8 +29,6 @@ export default {
             let response = await api.auth.login(credentials)
             response = response.data
 
-            console.log(response)
-
             if (response.success !== true) {
                 throw response.error
             }

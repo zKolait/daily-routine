@@ -18,6 +18,20 @@
 </template>
 
 <script>
+import cookies from 'vue-cookies';
+import store from '@/store/store'
+import router from '@/router'
+
+export default {
+  data () {
+    return {
+        user: null,
+    }
+  },
+  mounted () {
+    // https://michaelnthiessen.com/force-re-render
+  }
+}
 </script>
 
 <style scoped>
@@ -106,7 +120,7 @@
 
   #main__container #main__svg {
     position: absolute;
-    padding-top: 75px;
+    padding-top: 60px;
     max-width: calc(50%);
     display: flex;
     justify-content: flex-start;

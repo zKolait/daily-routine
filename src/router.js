@@ -40,10 +40,7 @@ const router = new Router({
       name: 'admin',
       meta: { layout: 'admin' },
       // Page with middleware
-      beforeEnter: (to, from, next) => {
-        authMiddleware(to, from, next)
-        next()
-      },
+      beforeEnter: authMiddleware,
       component: Admin
     }
   ]

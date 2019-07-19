@@ -4,7 +4,7 @@
             <i class="icon ion-md-checkmark"></i>
             <h2>Dailyroutine</h2>
         </router-link>
-        <router-link to="/login" id="app__login__button" v-if="checkRoute() || headerType === 'register'">
+        <router-link to="/login" id="app__login__button" v-if="(checkRoute() && !isLogged || headerType === 'register')">
             <p>Se connecter</p>
             <i class="icon ion-md-arrow-dropright"></i>
         </router-link>
@@ -12,17 +12,31 @@
             <p>S'enregistrer</p>
             <i class="icon ion-md-arrow-dropright"></i>
         </router-link>
+        <router-link to="/dashboard" id="app__login__button" v-if="headerType === null && isLogged">
+            <p>Dashboard</p>
+            <i class="icon ion-md-arrow-dropright"></i>
+        </router-link>
     </header>
 </template>
 
 <script>
+import cookies from 'vue-cookies';
+
 export default {
     data () {
         return {
             headerType: null,
+            isLogged: false,
         }
     },
     mounted () {
+        console.log('mounted');
+        if (cookies.get('x-hp')) {
+            this.isLogged = true
+        } else {
+            this.isLogged = false
+        }
+
         this.checkRoute()
     },
     methods: {

@@ -4,6 +4,7 @@ import '@/plugins/axios'
 import App from '@/App.vue'
 import router from '@/router'
 import store from '@/store/store'
+import VueCookies from 'vue-cookies'
 
 // Plugins
 import VueScrollReveal from 'vue-scroll-reveal';
@@ -23,6 +24,7 @@ Vue.component('landing-layout', Landing)
 
 // Plugins use
 Vue.use(VueScrollReveal);
+Vue.use(VueCookies)
 
 // Vue global
 Vue.config.productionTip = false

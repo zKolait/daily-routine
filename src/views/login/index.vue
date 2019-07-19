@@ -35,20 +35,20 @@ export default {
                 return this.error = 'Veuillez remplir tous les champs.'
             }
 
-            this.$store.dispatch('login', {
+            console.log('a')
+            let response = await this.$store.dispatch('login', {
                 email: this.credentials.email,
                 password: this.credentials.password
             })
-            .then((response) => {
-                if (response.success === false) {
-                    return this.error = response.message
-                } else {
-                    return this.$router.push('/')   
-                }
-            })
-            .catch((error) => {
-                return this.error = error.response.data
-            })
+
+            console.log('b')
+            if (response.success === false) {
+                console.log('c')
+                return this.error = response.message
+            } else {
+                console.log(response)
+                return this.$router.push('/')   
+            }
         }
     },
 }
