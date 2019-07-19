@@ -7,7 +7,6 @@ const cookieParser = require('cookie-parser')
 // Middleware auth : is user identified ?
 const auth = async (req, res, next) => {
     try {
-        console.log(req.cookies)
         // Check if cookies exists
         if (req.cookies['x-hp'] === undefined || req.cookies['x-s'] === undefined || !req.xhr) {
             res.clearCookie('x-hp', { path: '/' })

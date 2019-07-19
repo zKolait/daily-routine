@@ -1,6 +1,6 @@
 <template>
     <div id="page__container">
-        <landing-header :key="headerKey"/>
+        <landing-header />
         <main>
             <slot/>
         </main>
@@ -9,7 +9,13 @@
 </template>
 
 <script>
+import LandingHeader from '@/components/landing/header'
+import LandingFooter from '@/components/landing/footer'
+
 export default {
-    
+    components: { 
+        LandingHeader, 
+        LandingFooter 
+    },
 }
 </script>

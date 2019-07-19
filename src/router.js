@@ -39,7 +39,6 @@ const router = new Router({
       path: '/dashboard',
       name: 'dashboard',
       meta: { layout: 'dashboard' },
-      // Page with middleware
       beforeEnter: authMiddleware,
       component: Dashboard
     }

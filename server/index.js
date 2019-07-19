@@ -1,13 +1,12 @@
 const express = require('express')
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 
 const userRouter = require('./routers/user')
 const taskRouter = require('./routers/task')
 
 const app = express()
 const port = process.env.SERVER_PORT
-
-// Accept json requests
-app.use(express.json())
 
 // CORS
 app.use(function (req, res, next) {
@@ -22,6 +21,14 @@ app.use(function (req, res, next) {
 
     next();
 });
+
+// Accept json requests
+app.use(express.json())
+app.use(cookieParser())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({
+    extended: true
+}))
 
 // Routes
 app.use(userRouter)
