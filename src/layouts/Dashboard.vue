@@ -8,6 +8,8 @@
     </div>
 </template>
 
+
+
 <script>
 import LandingHeader from '@/components/landing/header'
 import LandingFooter from '@/components/landing/footer'
