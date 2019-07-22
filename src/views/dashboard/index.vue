@@ -1,11 +1,12 @@
 <template>
     <section id="main__container">
-        <a id="add__objective">
+        <!-- <a id="add__objective">
             <p>Ajouter un objectif</p>
             <i class="icon ion-md-add"></i>
-        </a>
+        </a> -->
         <div id="items__container">
             <objectives />
+            <graphs />
         </div>
     </section>
 </template>
@@ -14,10 +15,12 @@
 
 <script>
 import Objectives from '@/components/dashboard/objectives'
+import Graphs from '@/components/dashboard/graphs'
 
 export default {
     components: {
-        Objectives
+        Objectives,
+        Graphs,
     }
 }
 </script>
@@ -26,7 +29,7 @@ export default {
 
 <style scoped>
 #main__container {
-    min-width: calc(100% - 200px);
+    min-width: calc(100% - 250px);
     padding: 25px 100px 0px 100px;
     display: flex;
     justify-content: space-between;
@@ -34,7 +37,7 @@ export default {
     flex-direction: column;
 }
 
-#add__objective {
+/* #add__objective {
     margin-bottom: 25px;
     margin-left: 10px;
     background: var(--primaryColor);
@@ -68,7 +71,7 @@ export default {
     -webkit-box-shadow: var(--shadowBoxHoveredPrimaryColor);
     -moz-box-shadow: var(--shadowBoxHoveredPrimaryColor);
     box-shadow: var(--shadowBoxHoveredPrimaryColor);  
-}
+} */
 
 #items__container {
     margin-left: 10px;
