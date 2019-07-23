@@ -1,7 +1,7 @@
 <template>
     <div id="graphs__container">
-        <!-- <graph />
-        <graph /> -->
+        <graph />
+        <graph />
     </div>
 </template>
 
@@ -20,14 +20,33 @@ export default {
 
 
 <style scoped>
-#graphs__container {
-    width: calc(50% - 12.5px);
-    border-radius: 19px;
-    margin-left: 12.5px;
-    background: #efefef;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
+@media screen and (min-width: 1325px) {
+    #graphs__container {
+        width: calc(100% - 550px);
+        min-width: 500px;
+        border-radius: 19px;
+        margin-left: 0px;
+        background: #efefef;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+}
+
+@media screen and (max-width: 1325px) {
+    #graphs__container {
+        width: 100%;
+        min-width: 300px;
+        border-radius: 19px;
+        margin-left: 0px;
+        background: #efefef;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }  
 }
 </style>

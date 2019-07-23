@@ -28,13 +28,25 @@ export default {
 
 
 <style scoped>
-#main__container {
-    min-width: calc(100% - 250px);
-    padding: 25px 100px 0px 100px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-direction: column;
+@media screen and (min-width: 900px) {
+    #main__container {
+        min-width: calc(100% - 250px);
+        padding: 25px 100px 0px 100px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-direction: column;
+    } 
+}
+@media screen and (max-width: 900px) {
+    #main__container {
+        min-width: 100%;
+        padding: 25px 0px 0px 0px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-direction: column;
+    } 
 }
 
 /* #add__objective {
@@ -74,12 +86,12 @@ export default {
 } */
 
 #items__container {
-    margin-left: 10px;
-    width: calc(100% - 20px);
+    margin-left: 20px;
+    width: calc(100% - 40px);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-start;
 }
 

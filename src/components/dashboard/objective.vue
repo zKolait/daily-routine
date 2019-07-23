@@ -43,7 +43,9 @@ export default {
 
 <style scoped>
 .item__container {
+    max-width: 500px;
     width: 100%;
+    min-width: 300px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -51,7 +53,7 @@ export default {
 
 .item__bar {
     margin: 3px 0px 5px 0px;
-    width: calc(100% - 100px);
+    width: calc(100% - 50px);
     background: #FFA726;
     border-radius: 19px;
     height: 38px;
@@ -108,6 +110,19 @@ export default {
     left: 12.5px;
     position: relative;
     font-size: 21px;
+}
+
+
+@media screen and (max-width: 1225px) and (min-width: 900px) {
+    .item__container {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .item__container {
+        max-width: 100%;
+    }
 }
 
 
