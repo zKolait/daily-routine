@@ -7,8 +7,9 @@
                     <button><i class="icon ion-md-add"></i></button>
                 </form>
             </div>
+            <div class="lds-ellipsis" v-if="loading"><div></div><div></div><div></div><div></div></div>
             <div id="objectives__items__container">
-                <objective v-for="objective in objectives" v-bind:key="objective.index" v-bind:objective="objective" @deleteItem="deleteObjective(objective)"/>
+                <objective v-for="objective in objectives" v-bind:key="objective.index" v-bind:objective="objective" @deleteItem="deleteObjective"/>
             </div>
         </div>
         <ul id="objectives__description">
@@ -25,6 +26,11 @@
 
 <script>
 import Objective from '@/components/dashboard/objective'
+import randomatic from 'randomatic'
+import Vue from 'vue'
+
+const api = require('@/api/api').default;
+
 
 export default {
     components: {
@@ -33,42 +39,56 @@ export default {
     data () {
         return {
             objective: null,
-            objectives: [
-                {
-                    title: 'Faire 50 pompes',
-                    completed: false,
-                },
-                {
-                    title: 'Dessiner un plan',
-                    completed: true,
-                }
-            ],
+            objectives: [],
+            loading: true,
         }
     },
-    mounted () {
+    async mounted () {
         // Get API
         // Set this.objectives
+        let tasks = await api.tasks.getTasks()
+        this.loading = false
+
+        if (!tasks) {
+            return
+        }
+
+        this.objectives = tasks.data
     },
     methods: {
-        addObjective () {
+        async addObjective () {
+            if (!this.objective) {
+                return
+            }
+
             let objective = {
-                title: this.objective,
+                description: this.objective,
                 completed: false,
             }
 
-            // Add on API
-
+            let random = await randomatic('aA0', 6)
+            objective.loading = true
+            objective.tempId = random    
 
             // Add on UI
             this.objectives.push(objective)
             this.objective = ''
-        },
-        deleteObjective (objective) {
-            // Update API
 
+            // Update API
+            objective = await api.tasks.addTask(objective)
+            objective = objective.data
+
+            // Loading = false UI
+            let index = this.objectives.findIndex((item) => (item.tempId === random))
+            Vue.set(this.objectives, index, objective)
+        },
+        async deleteObjective (objectiveId) {
             // Update UI
-            let index = this.objectives.findIndex((item) => item == objective)
+            let index = this.objectives.findIndex((item) => item._id.toString() == objectiveId.toString())
             this.objectives.splice(index, 1)
+
+            // Update API
+            await api.tasks.deleteTask(objectiveId) 
         },
     }
 }
@@ -87,7 +107,6 @@ export default {
 ::-ms-input-placeholder {
   color: white;
 }
-
 
 #objectives__description {
     -webkit-transition: var(--transitionTime);
@@ -431,4 +450,61 @@ export default {
         flex-direction: column;
     }
 }
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 27px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--primaryColor);
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 6px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 6px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 26px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 45px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
+}
+
 </style>

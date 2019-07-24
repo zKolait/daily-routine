@@ -31,4 +31,30 @@ export default {
             }
         })
     },
+    tasks: {
+        getTasks: () => axios.get('/tasks', {
+            withCredentials: true,
+            header: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }),
+        addTask: (data) => axios.post('/tasks', data, {
+            withCredentials: true,
+            header: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }),
+        deleteTask: (id) => axios.delete('/tasks/' + id, {
+            withCredentials: true,
+            header: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }),
+        checkTask: (id, data) => axios.patch('/tasks/' + id, data, {
+            withCredentials: true,
+            header: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+    }
 }

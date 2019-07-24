@@ -7,8 +7,8 @@ const cookieParser = require('cookie-parser')
 // Middleware auth : is user identified ?
 const auth = async (req, res, next) => {
     try {
-        // Check if cookies exists
-        if (req.cookies['x-hp'] === undefined || req.cookies['x-s'] === undefined || !req.xhr) {
+        // Check if cookies exists || !req.xhr
+        if (req.cookies['x-hp'] === undefined || req.cookies['x-s'] === undefined ) {
             res.clearCookie('x-hp', { path: '/' })
             res.clearCookie('x-s', { path: '/' })
             throw new Error('You need to be authenticated to perform this action.')
@@ -24,7 +24,6 @@ const auth = async (req, res, next) => {
         }
         const PUBLIC_KEY = process.env.PUBLIC_KEY.replace(/\\n/g, '\n')
         const decoded = await jwt.verify(token, PUBLIC_KEY, verifyOptions)
-
 
         let user = await User.findById(decoded._id)
 

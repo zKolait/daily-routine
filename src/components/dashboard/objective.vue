@@ -1,39 +1,54 @@
 <template>
     <div class="item__container">
         <div class="item__bar" @click="checkObjective" :class="{validatedObjective: objective.completed}">
-            <p>{{ objective.title }}</p>
+            <p>{{ objective.description }}</p>
             <div class="item__checker">
                 <i class="icon ion-md-checkmark"></i>
             </div>
         </div>
-        <div class="item__delete" @click="deleteItem()">
+        <div class="item__delete" @click="deleteItem()" v-if="!objective.loading && !sending">
             <i class="icon ion-md-trash"></i>
         </div>
+        <div class="lds-ripple" v-if="objective.loading || sending"><div></div><div></div></div>
     </div>
 </template>
 
 
 
 <script>
+const api = require('@/api/api').default;
+
 export default {
     props: {
         objective: Object,
         required: true,
     },
+    data () {
+        return {
+            sending: false,
+        }
+    },
     methods: {
-        checkObjective() {
-            // Update API
-
+        async checkObjective() {
+            if (!this.objective._id || this.sending) {
+                return
+            }
 
             // Update UI
             this.objective.completed = !this.objective.completed
+
+            // Update API
+            let update = {
+                completed: this.objective.completed
+            }
+
+            this.sending = true
+            await api.tasks.checkTask(this.objective._id, update)
+            this.sending = false
         },
         deleteItem() {
-            // Update API
-
-
-            // Update UI
-            this.$emit('deleteItem')
+            // Update UI & API
+            this.$emit('deleteItem', this.objective._id)
         }
     }
 }
@@ -111,6 +126,43 @@ export default {
     position: relative;
     font-size: 21px;
 }
+
+
+
+.lds-ripple {
+  display: inline-block;
+  position: relative;
+  width: 38px;
+  height: 38px;
+}
+.lds-ripple div {
+  position: absolute;
+  border: 8px solid var(--primaryColor);
+  opacity: 1;
+  border-radius: 50%;
+  animation: lds-ripple 1.75s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(2) {
+  animation-delay: -0.75s;
+}
+@keyframes lds-ripple {
+  0% {
+    top: 12px;
+    left: 12px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: -4px;
+    left: -4px;
+    width: 30px;
+    height: 30px;
+    opacity: 0;
+  }
+}
+
+
 
 
 @media screen and (max-width: 1225px) and (min-width: 900px) {
