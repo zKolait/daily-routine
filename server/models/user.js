@@ -55,7 +55,26 @@ const userSchema = new mongoose.Schema({
     }],
     avatar: {
         type: Buffer
-    }
+    },
+    stats: [{
+        day: {
+            value: {
+                type: Number,
+                required: true,
+                validator(value) {
+                    if (value > 100) {
+                        value = 100
+                    } else if (value < 0) {
+                        value = 0
+                    }
+                }
+            },
+            time: {
+                type: String,
+                required: true,
+            }
+        }
+    }]
 }, {
     timestamps: true
 })

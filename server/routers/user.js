@@ -215,5 +215,128 @@ router.get('/users/:id/avatar', async (req, res) => {
 })
 
 
+// Set day value
+router.post('/users/stats', auth, async (req, res) => {
+    try {
+        if (!req.body.value) {
+            throw new Error()
+        }
+
+        var now = new Date()
+        var start = new Date(now.getFullYear(), 0, 0)
+        var diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000)
+        var oneDay = 1000 * 60 * 60 * 24
+        var dayOfTheYear = Math.floor(diff / oneDay)
+        let date = new Date().getFullYear() + '' + dayOfTheYear
+        
+        let day = {
+            value: req.body.value,
+            time: date
+        }
+
+        let stats = []
+        if (req.user.stats.length > 0) {
+            req.user.stats.forEach((day) => {
+                stats.push(day.toJSON())
+            })
+        }
+
+        let doubleIndex = null
+        if (stats.length > 0) {
+            doubleIndex = await stats.findIndex((day) => day.day.time == date)
+        }
+
+        if (doubleIndex !== -1) {
+            stats[doubleIndex].day.value = day.value
+            await req.user.updateOne(
+                {
+                    $set: {
+                        stats
+                    }
+                }
+            ) 
+        } else {
+            if (stats.length < 1) {
+                stats = [{
+                    day
+                }]
+            } else {
+                stats.push(
+                    {
+                        day
+                    }
+                )
+            }
+
+            await req.user.updateOne(
+                {
+                    $set: {
+                        stats
+                    }
+                }
+            ) 
+        }
+
+        req.user.save()
+
+        res.status(200).send({ success: true, day })
+    }
+    catch (e) {
+        res.status(200).send({ error: `Impossible d'ajouter les données.`, success: false })
+    }
+})
+
+
+
+router.get('/users/stats', auth, async (req, res) => {
+    try {
+        let stats = []
+        if (req.user.stats.length > 0) {
+            req.user.stats.forEach((day) => {
+                stats.push(day.toJSON())
+            })
+        } else {
+            res.status(200).send({ success: true, stats: null })
+        }
+
+        var now = new Date()
+        var start = new Date(now.getFullYear(), 0, 0)
+        var diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000)
+        var oneDay = 1000 * 60 * 60 * 24
+        var dayOfTheYear = Math.floor(diff / oneDay)
+        let today = new Date().getFullYear() + '' + dayOfTheYear
+
+        let filteredStats = stats.filter((day) => (today - day.day.time) < 30)
+
+        maxIndex = parseInt(today) - parseInt(filteredStats[0].day.time)
+        maxValue = filteredStats[filteredStats.length - 1].day.time
+
+        let filledStats = []
+        let i = 30
+        while (i > 0) {
+            filledStats[i] = [{
+                time: maxValue - i,
+                value: 0,
+            }]
+            i--
+        }
+
+        for (let index = 0; index < filteredStats.length; index++) {
+            filledStats[maxValue - filteredStats[index].day.time] = [{
+                time: parseInt(filteredStats[index].day.time), 
+                value: parseInt(filteredStats[index].day.value)
+            }]
+        }
+
+        reversedStats = filledStats.reverse()
+
+        res.status(200).send({ success: true, stats: reversedStats })
+    } catch (e) {
+        res.status(200).send({ error: `Impossible de récupérer les données.`, success: false })
+    }
+})
+
+
+
 // Export
 module.exports = router
