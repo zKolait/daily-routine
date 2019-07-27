@@ -44,7 +44,7 @@ export default {
 
   #main__container #website__main__presentation {
     position: relative;
-    padding: 90px 0px 4vw 0px;
+    padding: 50px 0px 4vw 0px;
     width: calc(50%);
     min-width: 690px;
     display: flex;

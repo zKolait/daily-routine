@@ -8,6 +8,7 @@ import VueCookies from 'vue-cookies'
 
 // Plugins
 import VueScrollReveal from 'vue-scroll-reveal';
+import ApexCharts from 'apexcharts';
 
 // Layouts
 import Default from '@/layouts/Default'
@@ -24,7 +25,7 @@ Vue.component('landing-layout', Landing)
 
 // Plugins use
 Vue.use(VueScrollReveal);
-Vue.use(VueCookies)
+Vue.use(VueCookies);
 
 // Vue global
 Vue.config.productionTip = false

@@ -48,7 +48,7 @@ export default {
             if (response.success === false) {
                 return this.error = response.message
             } else {
-                return this.$router.push('/')   
+                return this.$router.push('/dashboard')   
             }
         }
     },

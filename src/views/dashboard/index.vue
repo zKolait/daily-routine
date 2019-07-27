@@ -1,12 +1,8 @@
 <template>
     <section id="main__container">
-        <!-- <a id="add__objective">
-            <p>Ajouter un objectif</p>
-            <i class="icon ion-md-add"></i>
-        </a> -->
         <div id="items__container">
-            <objectives />
-            <graphs />
+            <objectives @updateGraph="updateGraph" />
+            <graphs :updateGraphNumber="updateGraphNumber" />
         </div>
     </section>
 </template>
@@ -21,6 +17,16 @@ export default {
     components: {
         Objectives,
         Graphs,
+    },
+    data () {
+        return {
+            updateGraphNumber: 0,
+        }
+    },
+    methods: {
+        updateGraph () {
+            this.updateGraphNumber++
+        }
     }
 }
 </script>

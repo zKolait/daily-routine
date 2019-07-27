@@ -4,25 +4,34 @@
             <i class="icon ion-md-checkmark"></i>
             <h2>Dailyroutine</h2>
         </router-link>
-        <router-link to="/login" id="app__login__button" v-if="(checkRoute() && !isLogged || headerType === 'register')">
+        <router-link to="/login" id="app__login__button" v-if="((checkRoute() && !isLogged || headerType === 'register') && !disconnect)">
             <p>Se connecter</p>
             <i class="icon ion-md-arrow-dropright"></i>
         </router-link>
-        <router-link to="/register" id="app__login__button" v-if="headerType === 'login'">
+        <router-link to="/register" id="app__login__button" v-if="(headerType === 'login' && !disconnect)">
             <p>S'enregistrer</p>
             <i class="icon ion-md-arrow-dropright"></i>
         </router-link>
-        <router-link to="/dashboard" id="app__login__button" v-if="headerType === null && isLogged">
+        <router-link to="/dashboard" id="app__login__button" v-if="(headerType === null && isLogged && !disconnect)">
             <p>Dashboard</p>
             <i class="icon ion-md-arrow-dropright"></i>
         </router-link>
+        <a id="app__login__button" v-if="(disconnect)" @click="disconnectUser()">
+            <p>Déconnexion</p>
+            <i class="icon ion-md-arrow-dropright"></i>
+        </a>
     </header>
 </template>
 
 <script>
 import cookies from 'vue-cookies';
 
+const api = require('@/api/api').default;
+
 export default {
+    props: {
+        disconnect: Boolean,
+    },
     data () {
         return {
             headerType: null,
@@ -53,6 +62,10 @@ export default {
 
                 return true
             }
+        },
+        async disconnectUser() {
+            await api.auth.logout()
+            this.$router.push('/')
         }
     },
 }
@@ -121,6 +134,7 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
 
         -webkit-box-shadow: var(--shadowBoxAccentColor);
         -moz-box-shadow: var(--shadowBoxAccentColor);

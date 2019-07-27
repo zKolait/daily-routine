@@ -13,7 +13,7 @@
     </div>
 </template>
 
-
+a
 
 <script>
 const api = require('@/api/api').default;
@@ -21,7 +21,7 @@ const api = require('@/api/api').default;
 export default {
     props: {
         objective: Object,
-        required: true,
+        objectives: Array,
     },
     data () {
         return {
@@ -43,7 +43,22 @@ export default {
             }
 
             this.sending = true
+
             await api.tasks.checkTask(this.objective._id, update)
+
+            let objectivesLength = this.objectives.length
+            let objectivesChecked = 0
+            this.objectives.forEach(objective => {
+                if (objective.completed === true) {
+                    objectivesChecked++
+                }
+            });
+            let stats = {
+                value: (objectivesChecked / objectivesLength) * 100
+            }
+            await api.tasks.pushStats(stats)
+            this.$emit('updateGraph')
+
             this.sending = false
         },
         deleteItem() {
@@ -165,7 +180,7 @@ export default {
 
 
 
-@media screen and (max-width: 1225px) and (min-width: 900px) {
+@media screen and (max-width: 1325px) and (min-width: 900px) {
     .item__container {
         max-width: 100%;
     }

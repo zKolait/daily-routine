@@ -1,6 +1,7 @@
 const express = require('express')
 const multer = require('multer')
 const sharp = require('sharp')
+const bcrypt = require('bcrypt')
 const { sendWelcomeEmail, sendCancelationEmail } = require('../emails/account')
 
 
@@ -112,7 +113,10 @@ router.get('/auth/logout', auth, async (req, res) => {
 
 // Logout user
 router.get('/auth/logout', auth, async (req, res) => {
+    console.log('a')
+
     try {
+        console.log('b')
         // Clear cookies
         res.clearCookie('x-hp', { path: '/' })
         res.clearCookie('x-s', { path: '/' })
@@ -129,7 +133,7 @@ router.get('/auth/logout', auth, async (req, res) => {
         res.clearCookie('x-s', { path: '/' })
 
         const error = e.message
-        res.status(400).send({ success: true, error })
+        res.status(200).send({ success: true, error })
     }
 })
 
@@ -218,7 +222,7 @@ router.get('/users/:id/avatar', async (req, res) => {
 // Set day value
 router.post('/users/stats', auth, async (req, res) => {
     try {
-        if (!req.body.value) {
+        if (req.body.value == null || req.body.value == undefined) {
             throw new Error()
         }
 
@@ -295,8 +299,6 @@ router.get('/users/stats', auth, async (req, res) => {
             req.user.stats.forEach((day) => {
                 stats.push(day.toJSON())
             })
-        } else {
-            res.status(200).send({ success: true, stats: null })
         }
 
         var now = new Date()
@@ -306,14 +308,26 @@ router.get('/users/stats', auth, async (req, res) => {
         var dayOfTheYear = Math.floor(diff / oneDay)
         let today = new Date().getFullYear() + '' + dayOfTheYear
 
+        if (stats.length < 1) {
+            stats.push({
+                day: {
+                    time: parseInt(today),
+                    value: 0
+                }
+            })
+
+            req.user.stats = stats
+            req.user.save()
+        }
+
         let filteredStats = stats.filter((day) => (today - day.day.time) < 30)
 
         maxIndex = parseInt(today) - parseInt(filteredStats[0].day.time)
-        maxValue = filteredStats[filteredStats.length - 1].day.time
+        maxValue = today
 
         let filledStats = []
         let i = 30
-        while (i > 0) {
+        while (i > -1) {
             filledStats[i] = [{
                 time: maxValue - i,
                 value: 0,
@@ -322,7 +336,7 @@ router.get('/users/stats', auth, async (req, res) => {
         }
 
         for (let index = 0; index < filteredStats.length; index++) {
-            filledStats[maxValue - filteredStats[index].day.time] = [{
+            filledStats[today - filteredStats[index].day.time] = [{
                 time: parseInt(filteredStats[index].day.time), 
                 value: parseInt(filteredStats[index].day.value)
             }]

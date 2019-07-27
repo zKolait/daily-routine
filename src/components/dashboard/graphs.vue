@@ -1,7 +1,6 @@
 <template>
     <div id="graphs__container">
-        <graph />
-        <graph />
+        <graph :updateGraphNumber="updateGraphNumber" />
     </div>
 </template>
 
@@ -11,6 +10,9 @@
 import Graph from '@/components/dashboard/graph'
 
 export default {
+    props: {
+        updateGraphNumber: Number,
+    },
     components: {
         Graph
     }
@@ -26,7 +28,6 @@ export default {
         min-width: 500px;
         border-radius: 19px;
         margin-left: 0px;
-        background: #efefef;
         display: flex;
         align-items: flex-start;
         justify-content: flex-start;
@@ -41,7 +42,6 @@ export default {
         min-width: 300px;
         border-radius: 19px;
         margin-left: 0px;
-        background: #efefef;
         display: flex;
         align-items: flex-start;
         justify-content: flex-start;

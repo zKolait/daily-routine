@@ -1,6 +1,6 @@
 <template>
     <div id="page__container">
-        <landing-header />
+        <landing-header :disconnect="true" />
         <main>
             <slot/>
         </main>

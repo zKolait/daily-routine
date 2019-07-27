@@ -55,6 +55,18 @@ export default {
             header: {
                 'X-Requested-With': 'XMLHttpRequest'
             }
+        }),
+        getStats: () => axios.get('/users/stats', {
+            withCredentials: true,
+            header: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }),
+        pushStats: (stats) => axios.post('/users/stats', stats, {
+            withCredentials: true,
+            header: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         })
     }
 }
