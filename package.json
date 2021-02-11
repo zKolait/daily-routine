@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@sendgrid/mail": "^6.4.0",
-    "apexcharts": "^3.8.3",
+    "apexcharts": "^3.24.0",
     "bcrypt": "^3.0.6",
     "bcryptjs": "^2.4.3",
     "concurrently": "^4.1.0",
